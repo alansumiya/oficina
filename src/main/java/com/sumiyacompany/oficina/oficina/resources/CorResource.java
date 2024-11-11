@@ -15,33 +15,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.sumiyacompany.oficina.oficina.entities.Telefone;
-import com.sumiyacompany.oficina.oficina.services.TelefoneService;
+import com.sumiyacompany.oficina.oficina.entities.Cor;
+import com.sumiyacompany.oficina.oficina.services.CorService;
 
 @RestController
-@RequestMapping(value = "/telefones")
-public class TelefoneResource {
+@RequestMapping(value = "/cores")
+public class CorResource {
 
 	@Autowired
-	private TelefoneService service;
+	private CorService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Telefone>> findAll(){
-		List<Telefone> list = service.findAll();
+	public ResponseEntity<List<Cor>> findAll(){
+		List<Cor> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Telefone> findById(@PathVariable Long id){
-		Telefone obj = service.findById(id);
+	public ResponseEntity<Cor> findById(@PathVariable Long id){
+		Cor obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Telefone> insert(@RequestBody Telefone obj){
+	public ResponseEntity<Cor> insert(@RequestBody Cor obj){
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				  .buildAndExpand(obj.getIdTelefone()).toUri();
+				  .buildAndExpand(obj.getIdCor()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 		
 	}
@@ -53,7 +53,7 @@ public class TelefoneResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Telefone> update(@PathVariable Long id, @RequestBody Telefone obj){
+	public ResponseEntity<Cor> update(@PathVariable Long id, @RequestBody Cor obj){
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}

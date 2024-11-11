@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.sumiyacompany.oficina.oficina.entities.Cliente;
-import com.sumiyacompany.oficina.oficina.repositories.ClienteRepository;
+import com.sumiyacompany.oficina.oficina.entities.Cor;
+import com.sumiyacompany.oficina.oficina.repositories.CorRepository;
 import com.sumiyacompany.oficina.oficina.services.exceptions.DataBaseException;
 import com.sumiyacompany.oficina.oficina.services.exceptions.ResourceNotFoundException;
 
@@ -15,24 +15,24 @@ import jakarta.persistence.EntityNotFoundException;
 
 public class CorService {
 	@Autowired
-	private ClienteRepository repository;
+	private CorRepository repository;
 	
-	public List<Cliente> findAll(){
+	public List<Cor> findAll(){
 		return repository.findAll();
 	}
 	
-	public Cliente findById(Long id) {
-		Optional<Cliente> obj = repository.findById(id);
+	public Cor findById(Long id) {
+		Optional<Cor> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
-	public Cliente insert(Cliente obj) {
+	public Cor insert(Cor obj) {
 		return repository.save(obj);
 	}
 	
 	public void delete(Long id) {
-		Optional<Cliente> cliente = repository.findById(id);
-		if(cliente.isPresent()) {
+		Optional<Cor> cor = repository.findById(id);
+		if(cor.isPresent()) {
 			try {
 				repository.deleteById(id);
 			} catch (DataIntegrityViolationException e) {
@@ -43,9 +43,9 @@ public class CorService {
 		}
 	}
 	
-	public Cliente update(Long id, Cliente obj) {
+	public Cor update(Long id, Cor obj) {
 		try {
-			Cliente entity = repository.getReferenceById(id);
+			Cor entity = repository.getReferenceById(id);
 			updateData(entity, obj);
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
@@ -53,8 +53,8 @@ public class CorService {
 		}
 	}
 
-	private void updateData(Cliente entity, Cliente obj) {
-		entity.setNome(obj.getNome());
-		entity.setEndereco(obj.getEndereco());
+	private void updateData(Cor entity, Cor obj) {
+		entity.setCor(obj.getCor());
+		
 	}
 }
