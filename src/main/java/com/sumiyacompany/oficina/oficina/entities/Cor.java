@@ -15,7 +15,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Cor")
+@Table(name = "Cor", schema = "public")
 public class Cor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
