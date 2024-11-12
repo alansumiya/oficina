@@ -3,10 +3,18 @@ package com.sumiyacompany.oficina.oficina.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.sumiyacompany.oficina.oficina.entities.enums.TipoNum;
+
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "Telefone")
 public class Telefone implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -16,19 +24,27 @@ public class Telefone implements Serializable{
 	private Integer tipoNum;
 	private String numero;
 	
-	
+	@ManyToOne
+	@JoinColumn(name = "id_cliente")  //nome da coluna que vai fazer a associação do telefone
+	//com o cliente através de uma tabela a parte
+	private Cliente cliente;
 	
 	
 	public Telefone() {
 		
 	}
 
-	public Telefone(Long idTelefone, Integer tipoNum, String numero) {
+	
+
+	public Telefone(Long idTelefone, TipoNum tipoNum, String numero, Cliente cliente) {
 		super();
 		this.idTelefone = idTelefone;
-		this.tipoNum = tipoNum;
+		setTipoNum(tipoNum);
 		this.numero = numero;
+		this.cliente = cliente;
 	}
+
+
 
 	public Long getIdTelefone() {
 		return idTelefone;
@@ -38,20 +54,21 @@ public class Telefone implements Serializable{
 		this.idTelefone = idTelefone;
 	}
 
-	public Integer getTipoNum() {
-		return tipoNum;
-	}
-
-	public void setTipoNum(Integer tipoNum) {
-		this.tipoNum = tipoNum;
-	}
-
 	public String getNumero() {
 		return numero;
 	}
 
 	public void setNumero(String numero) {
 		this.numero = numero;
+	}
+	
+	public TipoNum getTipoNum() {
+		return TipoNum.valueOf(tipoNum);
+	}
+
+	public void setTipoNum(TipoNum tipoNum) {
+		if(tipoNum != null)
+		this.tipoNum = tipoNum.getCode();
 	}
 
 	@Override
